@@ -1,17 +1,17 @@
-# Use the penultimate stable version of Alpine as the base image
-FROM alpine:3.18
+# Use the latest stable version of Debian as the base image
+FROM debian:latest
 
 # Install MariaDB
-RUN apk update && apk add --no-cache mariadb mariadb-client mariadb-server-utils
+RUN apt-get update && apt-get install -y mariadb-server mariadb-client
 
 # Copy custom configuration files if you have any (optional)
-# COPY conf/my.cnf /etc/my.cnf
+# COPY conf/my.cnf /etc/mysql/my.cnf
 
 # Set up environment variables
 ENV MYSQL_DATABASE=wordpress_db
 
 # Initialize MariaDB
-RUN mysql_install_db --user=mysql --datadir=/var/lib/mysql
+# RUN systemctl start mariadb && systemctl enable mariadb
 
 # Expose the default MariaDB port
 EXPOSE 3306
@@ -21,4 +21,4 @@ EXPOSE 3306
 # RUN chmod +x /usr/local/bin/startup.sh
 
 # Start the MariaDB service
-CMD ["mysqld", "--user=mysql", "--console"]
+CMD ["mysqld_safe"]
