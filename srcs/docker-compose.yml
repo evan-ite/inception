@@ -1,0 +1,31 @@
+
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb-container
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - wordpress-network
+
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress-container
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    networks:
+      - wordpress-network
+    restart: always
+
+volumes:
+  mariadb_data:
+  wordpress_data:
+
+networks:
+  wordpress-network:
