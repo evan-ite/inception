@@ -21,7 +21,15 @@ services:
       - wordpress_data:/var/www/html/wordpress
     networks:
       - wordpress-network
-    restart: always
+
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx-container
+    ports:
+      - "8080:80"
+    networks:
+      - wordpress-network
+
 
 volumes:
   mariadb_data:

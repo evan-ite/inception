@@ -3,15 +3,16 @@ FROM debian:latest
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
-	php7.4-fpm \
-	php7.4-mysql \
+	php8.2-fpm \
+	php8.2-mysql \
 	wget \
 	unzip \
 	&& apt-get clean
 
-ENV WORDPRESS_DB_HOST=mariadb-container:3306 \
-	# PATH="/usr/sbin:${PATH}"
-	PATH="/usr/sbin/php-fpm7.4:${PATH}"
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+ENV PATH="/usr/sbin:${PATH}"
 
 # Create the directory for WordPress
 RUN mkdir -p /var/www/html
@@ -24,8 +25,20 @@ RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/wordpress
 
+# Copy custom php-fpm configuration
+COPY conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
+
+# Copy wp-config.php
+COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
+
+# Change working directory
+WORKDIR /var/www/html/wordpress
+
+# Install phpdotenv
+RUN composer require vlucas/phpdotenv
+
 # Expose the PHP-FPM port
 EXPOSE 9000
 
 # Start PHP-FPM
-CMD ["php-fpm7.4", "-F"]
+CMD ["php-fpm8.2", "-F"]
