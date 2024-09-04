@@ -26,6 +26,7 @@ RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/wordpress
+RUN chmod -R u+rwx /var/www/html/wordpress
 
 # Copy custom php-fpm configuration
 COPY conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf

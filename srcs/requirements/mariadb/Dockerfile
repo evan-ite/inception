@@ -10,9 +10,6 @@ RUN apt-get update && apt-get install -y mariadb-server mariadb-client
 # Set up environment variables
 ENV MYSQL_DATABASE=wordpress_db
 
-# Initialize MariaDB
-# RUN systemctl start mariadb && systemctl enable mariadb
-
 # Expose the default MariaDB port
 EXPOSE 3306
 
