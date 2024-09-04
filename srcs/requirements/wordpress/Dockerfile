@@ -5,6 +5,8 @@ FROM debian:latest
 RUN apt-get update && apt-get install -y \
 	php8.2-fpm \
 	php8.2-mysql \
+	php-cli \
+	curl \
 	wget \
 	unzip \
 	&& apt-get clean
@@ -12,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-ENV PATH="/usr/sbin:${PATH}"
+ENV PATH="/usr/local/bin:/usr/sbin:${PATH}"
 
 # Create the directory for WordPress
 RUN mkdir -p /var/www/html

@@ -12,6 +12,15 @@ down:
 # Restart the Docker Compose services
 restart: down up
 
+re-wp:
+	cd srcs && docker-compose build --no-cache wordpress && docker-compose restart wordpress
+
+re-nginx:
+	cd srcs && docker-compose build --no-cache nginx && docker-compose restart nginx
+
+re-mdb:
+	cd srcs && docker-compose build --no-cache mariadb && docker-compose restart mariadb
+
 # Build the Docker Compose services
 build:
 	cd srcs && docker-compose build

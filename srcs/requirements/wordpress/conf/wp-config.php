@@ -22,9 +22,11 @@ define('DB_CHARSET', getenv('DB_CHARSET'));
 
 $table_prefix  = 'wp_';
 
-define('WP_DEBUG', false);
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
 
 if ( !defined('ABSPATH') )
 	define('ABSPATH', dirname(__FILE__) . '/');
 
 require_once(ABSPATH . 'wp-settings.php');
+?>

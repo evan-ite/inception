@@ -2,7 +2,7 @@
 FROM debian:latest
 
 # Install NGINX
-RUN apt-get update && apt-get install -y nginx
+RUN apt-get update && apt-get install -y nginx curl
 
 # Copy custom NGINX configuration file
 COPY conf/nginx.conf /etc/nginx/nginx.conf
