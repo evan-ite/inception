@@ -1,5 +1,5 @@
 # base image
-FROM debian:bullseye
+FROM debian:latest
 
 # update package manager
 RUN apt-get update -y && apt-get upgrade -y
