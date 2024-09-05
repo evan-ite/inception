@@ -8,7 +8,7 @@ RUN apt-get update -y && apt-get upgrade -y
 
 # install packages
 RUN apt-get install -y wget php8.2-fpm php8.2-mysql mariadb-client curl netcat-traditional
-# sendmail
+
 
 # clean up cached package files
 RUN rm -rf /var/lib/apt/lists/
