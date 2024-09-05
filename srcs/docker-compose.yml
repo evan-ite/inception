@@ -1,0 +1,17 @@
+
+services:
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - "8443:443"
+    restart: unless-stopped
