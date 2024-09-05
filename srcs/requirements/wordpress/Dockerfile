@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
 	curl \
 	wget \
 	unzip \
+	mariadb-client \
+	net-tools \
+	netcat-openbsd \
 	&& apt-get clean
 
 # Install Composer
@@ -30,6 +33,9 @@ RUN chmod -R u+rwx /var/www/html/wordpress
 
 # Copy custom php-fpm configuration
 COPY conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
+
+# Copy www.conf
+COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 # Copy wp-config.php
 COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php

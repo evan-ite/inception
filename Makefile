@@ -28,3 +28,6 @@ build:
 # View logs of the Docker Compose services
 logs:
 	cd srcs && docker-compose logs -f
+
+clean: down
+	docker rmi -f `docker images -q`

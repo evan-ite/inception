@@ -2,7 +2,10 @@
 FROM debian:latest
 
 # Install NGINX
-RUN apt-get update && apt-get install -y nginx curl
+RUN apt-get update && apt-get install -y nginx \
+	curl \
+	netcat-openbsd \
+	iputils-ping
 
 # Copy custom NGINX configuration file
 COPY conf/nginx.conf /etc/nginx/nginx.conf

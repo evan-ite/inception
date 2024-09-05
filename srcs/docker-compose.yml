@@ -10,7 +10,7 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
-      - wordpress-network
+      - network
 
   wordpress:
     build: ./requirements/wordpress
@@ -22,7 +22,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress
     networks:
-      - wordpress-network
+      - network
 
   nginx:
     build: ./requirements/nginx
@@ -30,7 +30,7 @@ services:
     ports:
       - "8080:80"
     networks:
-      - wordpress-network
+      - network
 
 
 volumes:
@@ -38,5 +38,5 @@ volumes:
   wordpress_data:
 
 networks:
-  wordpress-network:
+  network:
     driver: bridge
