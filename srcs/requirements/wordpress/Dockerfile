@@ -1,23 +1,46 @@
 # base image
 FROM debian:latest
 
-RUN mkdir -p /var/www/wordpress
+# Install necessary packages
+RUN apt-get update && apt-get install -y \
+	php8.2-fpm \
+	php8.2-mysql \
+	curl \
+	wget \
+	unzip \
+	mariadb-client \
+	net-tools \
+	netcat-openbsd \
+	&& apt-get clean
 
-# update package manager
-RUN apt-get update -y && apt-get upgrade -y
+ENV PATH="/usr/local/bin:/usr/sbin:${PATH}"
 
-# install packages
-RUN apt-get install -y wget php8.2-fpm php8.2-mysql mariadb-client curl netcat-traditional
+# Create the directory for WordPress
+RUN mkdir -p /var/www/html
 
+# Download and extract WordPress
+RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
+	unzip /tmp/wordpress.zip -d /var/www/html && \
+	rm /tmp/wordpress.zip
 
-# clean up cached package files
-RUN rm -rf /var/lib/apt/lists/
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/wordpress
+RUN chmod -R u+rwx /var/www/html/wordpress
 
-# copy WordPress config script into container
-COPY tools/wp_config.sh /usr/local/bin/wp_config.sh
+# Copy custom php-fpm configuration
+COPY conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 
-# change executable rights of database creation script
-RUN chmod +x /usr/local/bin/wp_config.sh
+# Copy www.conf
+COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
-# define WordPress config script to run when container starts
-ENTRYPOINT ["/usr/local/bin/wp_config.sh"]
+# Copy wp-config.php
+COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
+
+# Change working directory
+WORKDIR /var/www/html/wordpress
+
+# Expose the PHP-FPM port
+EXPOSE 9000
+
+# Start PHP-FPM
+CMD ["php-fpm8.2", "-F"]

@@ -1,14 +1,11 @@
 # base image
 FROM debian:latest
 
-# update package manager
-RUN apt-get update -y && apt-get upgrade -y
-
-# install nginx and openssl
-RUN apt-get install -y nginx openssl
-
-# clean up cached package files
-RUN rm -rf /var/lib/apt/lists/*
+# Install NGINX
+RUN apt-get update && apt-get install -y nginx \
+	curl \
+	netcat-openbsd \
+	iputils-ping
 
 # copy custom NGINX config file from our host machine into container
 COPY conf/nginx.conf /etc/nginx/nginx.conf

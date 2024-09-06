@@ -1,13 +1,20 @@
+#
+# Makefile for the 42 Inception project
+#
+# By Elise van Iterson
 
 .PHONY: up down restart volumes re-wp re-nginx re-mdb build logs clean
 
-up: volumes
+up: volumes env
 	cd srcs && docker-compose up -d
 
 down:
 	cd srcs && docker-compose down
 
 restart: down up
+
+env:
+	./srcs/requirements/tools/generate_keys.sh
 
 volumes:
 	mkdir -p ~/data/mariadb
@@ -20,14 +27,10 @@ re-nginx:
 	cd srcs && docker-compose build --no-cache nginx && docker-compose restart nginx
 
 re-mdb: volumes
-	cd srcs && docker-compose build --no-cache mariadb && dohelp:
+	cd srcs && docker-compose build --no-cache mariadb && docker-compose restart mariadb
 
 build: volumes
 	cd srcs && docker-compose build
 
-logs:
-	cd srcs && docker-compose logs -f
-
 clean: down
-	docker rm -f `docker ps -aq`
 	docker rmi -f `docker images -q`
