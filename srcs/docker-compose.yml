@@ -6,7 +6,7 @@ services:
     env_file:
       - .env
     ports:
-      - "3306:3306"
+      - "3306"
     networks:
       - inception
     volumes:
@@ -19,7 +19,7 @@ services:
     env_file:
       - .env
     ports:
-      - "9000:9000"
+      - "9000"
     depends_on:
       - mariadb
     networks:
