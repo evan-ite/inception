@@ -27,6 +27,10 @@ RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
 RUN chown -R www-data:www-data /var/www/html/wordpress
 RUN chmod -R u+rwx /var/www/html/wordpress
 
+# Install WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
+
 # Copy custom php-fpm configuration
 COPY conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 
@@ -34,7 +38,15 @@ COPY conf/php-fpm.conf /etc/php/8.2/fpm/php-fpm.conf
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
 # Copy wp-config.php
-COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
+# COPY conf/wp-config.php /var/www/html/wordpress/wp-config.php
+
+# Copy setup script and custom entrypoint script
+COPY tools/setup-wp.sh /usr/local/bin/setup-wp.sh
+COPY tools/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+# Make the scripts executable
+RUN chmod +x /usr/local/bin/setup-wp.sh \
+&& chmod +x /usr/local/bin/entrypoint.sh
 
 # Change working directory
 WORKDIR /var/www/html/wordpress
@@ -42,5 +54,5 @@ WORKDIR /var/www/html/wordpress
 # Expose the PHP-FPM port
 EXPOSE 9000
 
-# Start PHP-FPM
-CMD ["php-fpm8.2", "-F"]
+# Set the custom entrypoint
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

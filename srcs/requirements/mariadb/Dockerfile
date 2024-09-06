@@ -9,7 +9,7 @@ ENV MYSQL_DATABASE=wordpress_db
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-COPY conf/setup-db.sh /docker-entrypoint-initdb.d/setup-db.sh
+COPY tools/setup-db.sh /docker-entrypoint-initdb.d/setup-db.sh
 RUN chmod +x /docker-entrypoint-initdb.d/setup-db.sh
 
 # Expose the default MariaDB port
