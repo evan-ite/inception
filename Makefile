@@ -33,4 +33,4 @@ build: volumes
 	cd srcs && docker-compose build
 
 clean: down
-	docker rmi -f `docker images -q`
+	docker system prune -af

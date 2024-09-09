@@ -3,6 +3,11 @@
 # Check if WordPress is already installed
 if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 
+	echo "script does not exist"
+
+	# Download WordPress core files
+    wp core download --path=/var/www/html/wordpress --allow-root
+
     wp config create \
         --dbname=$DB_NAME \
         --dbuser=$DB_USER \
@@ -19,7 +24,9 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
         --admin_password=$WP_ADMIN_PASSWORD \
         --path=/var/www/html/wordpress \
         --allow-root
+
 else    
+	echo "script does exist"
     # Update site title
     wp option update blogname "$WP_TITLE" --path=/var/www/html/wordpress --allow-root
 
