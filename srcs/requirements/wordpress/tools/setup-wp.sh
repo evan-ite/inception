@@ -15,7 +15,7 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
         --dbhost=$DB_HOST \
         --path=/var/www/html/wordpress \
         --allow-root
-	
+
     wp core install \
         --url=$DOMAIN_NAME \
         --title=$WP_TITLE \
@@ -25,7 +25,7 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
         --path=/var/www/html/wordpress \
         --allow-root
 
-else    
+else
 	echo "script does exist"
     # Update site title
     wp option update blogname "$WP_TITLE" --path=/var/www/html/wordpress --allow-root

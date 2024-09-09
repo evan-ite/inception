@@ -18,11 +18,6 @@ ENV PATH="/usr/local/bin:/usr/sbin:${PATH}"
 # Create the directory for WordPress
 RUN mkdir -p /var/www/html/wordpress
 
-# Download and extract WordPress
-# RUN wget https://wordpress.org/latest.zip -O /tmp/wordpress.zip && \
-# 	unzip /tmp/wordpress.zip -d /var/www/html && \
-# 	rm /tmp/wordpress.zip
-
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/wordpress
 RUN chmod -R u+rwx /var/www/html/wordpress

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # File path
-ENV_FILE="/home/evan-ite/projects/inception/srcs/.env"
+ENV_FILE="/home/evan-ite/inception/srcs/.env"
 
 # Fetching keys from the WordPress API
 KEYS=$(curl -s https://api.wordpress.org/secret-key/1.1/salt/)
