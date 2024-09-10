@@ -34,3 +34,4 @@ build: volumes
 
 clean: down
 	docker system prune -af
+	sudo rm -rf ~/data/wordpress ~/data/mariadb
