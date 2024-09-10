@@ -7,6 +7,12 @@ function wait_for_mariadb() {
 		sleep 3
 	done
 	echo "MariaDB is ready."
+
+	until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASSWORD" -e "USE $DB_NAME; SELECT 1" &> /dev/null; do
+		echo "Waiting for database $DB_NAME to be created..."
+		sleep 3
+	done
+	echo "Database $DB_NAME is created and accessible."
 }
 
 # Wait for MariaDB to be ready

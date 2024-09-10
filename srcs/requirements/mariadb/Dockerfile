@@ -11,10 +11,12 @@ ENV MYSQL_DATABASE=wordpress_db
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 COPY tools/setup-db.sh /usr/local/bin/setup-db.sh
-RUN chmod +x /usr/local/bin/setup-db.sh
+COPY tools/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/setup-db.sh /usr/local/bin/entrypoint.sh
 
 # Expose the default MariaDB port
 EXPOSE 3306
 
 # Use a custom entrypoint script
-ENTRYPOINT ["/usr/local/bin/setup-db.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

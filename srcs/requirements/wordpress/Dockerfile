@@ -47,8 +47,7 @@ COPY tools/setup-wp.sh /usr/local/bin/setup-wp.sh
 COPY tools/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Make the scripts executable
-RUN chmod +x /usr/local/bin/setup-wp.sh \
-	&& chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/setup-wp.sh /usr/local/bin/entrypoint.sh
 
 # Change working directory
 WORKDIR /var/www/html/wordpress

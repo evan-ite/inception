@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# Start MariaDB service
-service mariadb start
-
-# Wait for MariaDB to be ready
-until mysqladmin ping -h "localhost" --silent; do
-	echo "Waiting for MariaDB to be ready..."
-	sleep 2
-done
-
-echo "MariaDB is ready."
-
 echo "Start WordPress database setup."
 
 # Connect to MariaDB and grant privileges
@@ -26,5 +15,3 @@ else
 	echo "Failed to grant privileges or create database."
 fi
 
-# Keep the container running
-tail -f /dev/null
