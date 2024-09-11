@@ -3,7 +3,7 @@
 #
 # By Elise van Iterson
 
-.PHONY: up down restart volumes network re-wp re-nginx re-mdb build logs clean
+.PHONY: up down restart env volumes re-wp re-nginx re-mdb build logs clean
 
 up: volumes env
 	cd srcs && docker-compose up -d
