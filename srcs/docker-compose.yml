@@ -36,9 +36,19 @@ services:
       - "8080:8080"
     depends_on:
       - wordpress
+      - adminer
     volumes:
       - wordpress:/var/www/html/wordpress
       - static:/var/www/html/static
+    networks:
+      - inception
+    restart: unless-stopped
+
+  adminer:
+    container_name: adminer
+    build: ./requirements/adminer
+    ports:
+      - "8484:8484"
     networks:
       - inception
     restart: unless-stopped
