@@ -44,7 +44,7 @@ Now change the temp.env file to add your own users and passwords.
 mv temp.env .env
 ```
 
-Keys and salts will be generated automatically by `srcs/requirements/tools/generate_keys.sh`. In generate_keys.sh, add the correct absolute path to your .env file.
+Keys and salts will be generated automatically by `srcs/requirements/tools/generate_keys.sh`. In `generate_keys.sh`, add the correct absolute path to your .env file.
 
 Now you're ready to run the project!
 ```sh
