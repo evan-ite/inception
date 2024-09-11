@@ -3,7 +3,7 @@
 #
 # By Elise van Iterson
 
-.PHONY: up down restart volumes re-wp re-nginx re-mdb build logs clean
+.PHONY: up down restart volumes network re-wp re-nginx re-mdb build logs clean
 
 up: volumes env
 	cd srcs && docker-compose up -d
@@ -19,6 +19,7 @@ env:
 volumes:
 	mkdir -p ~/data/mariadb
 	mkdir -p ~/data/wordpress
+	mkdir -p ~/data/static
 
 re-wp: volumes
 	cd srcs && docker-compose build --no-cache wordpress && docker-compose restart wordpress
@@ -34,4 +35,4 @@ build: volumes
 
 clean: down
 	docker system prune -af
-	sudo rm -rf ~/data/wordpress ~/data/mariadb
+	sudo rm -rf ~/data/wordpress ~/data/mariadb ~/data/static
