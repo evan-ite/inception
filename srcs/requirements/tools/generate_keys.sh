@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # File path
-ENV_FILE="/home/evan-ite/inception/srcs/.env"
+ENV_FILE="srcs/.env"
 
 # Fetching keys from the WordPress API
 KEYS=$(curl -s https://api.wordpress.org/secret-key/1.1/salt/)
 
 clean_key() {
-  echo "$1" | tr -d '\n' | xargs
+  echo "$1" | tr -d '\n$' | xargs
 }
 
 # Extracting and cleaning keys

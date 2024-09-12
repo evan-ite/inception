@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:bullseye
 
 # Install PHP and necessary extensions
 RUN apt-get update && apt-get install -y php php-mysqli wget

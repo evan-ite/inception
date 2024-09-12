@@ -1,5 +1,5 @@
 # base image
-FROM debian:latest
+FROM debian:bullseye
 
 # Install NGINX
 RUN apt-get update && apt-get install -y nginx \

@@ -7,4 +7,4 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 fi
 
 # Start PHP-FPM
-exec php-fpm8.2 -F
+exec php-fpm7.4 -F

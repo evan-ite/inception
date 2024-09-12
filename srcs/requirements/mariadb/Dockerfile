@@ -1,5 +1,5 @@
-# Use the latest stable version of Debian as the base image
-FROM debian:latest
+# Use stable version of Debian as the base image
+FROM debian:bullseye
 
 # Install MariaDB
 RUN apt-get update && apt-get install -y mariadb-server mariadb-client gettext
