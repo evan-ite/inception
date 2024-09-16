@@ -5,16 +5,13 @@
 
 .PHONY: up down restart env volumes re-wp re-nginx re-mdb build logs clean
 
-up: volumes env
+up: volumes
 	cd srcs && docker-compose up -d
 
 down:
 	cd srcs && docker-compose down
 
 restart: down up
-
-env:
-	./srcs/requirements/tools/generate_keys.sh
 
 volumes:
 	mkdir -p ~/data/mariadb

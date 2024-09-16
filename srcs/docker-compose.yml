@@ -8,7 +8,7 @@ services:
     expose:
       - "3306"
     networks:
-      - inception
+      - inception_network
     volumes:
       - mariadb:/var/lib/mysql
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
     depends_on:
       - mariadb
     networks:
-      - inception
+      - inception_network
     volumes:
       - wordpress:/var/www/html/wordpress
     restart: unless-stopped
@@ -41,7 +41,7 @@ services:
       - wordpress:/var/www/html/wordpress
       - static:/var/www/html/static
     networks:
-      - inception
+      - inception_network
     restart: unless-stopped
 
   adminer:
@@ -50,7 +50,7 @@ services:
     ports:
       - "8484:8484"
     networks:
-      - inception
+      - inception_network
     restart: unless-stopped
 
 volumes:
@@ -66,7 +66,7 @@ volumes:
     name: wordpress
     driver: local
     driver_opts:
-      device: ~data/wordpress
+      device: ~/data/wordpress
       o: bind
       type: none
 
@@ -74,11 +74,11 @@ volumes:
     name: static
     driver: local
     driver_opts:
-      device: ~data/static
+      device: ~/data/static
       o: bind
       type: none
 
 networks:
-  inception:
-    name: inception
+  inception_network:
+    name: inception_network
     driver: bridge

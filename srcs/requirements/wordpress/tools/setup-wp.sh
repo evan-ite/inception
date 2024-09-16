@@ -15,15 +15,12 @@ function wait_for_mariadb() {
 	echo "Database $DB_NAME is created and accessible."
 }
 
-# Wait for MariaDB to be ready
 wait_for_mariadb
 
-# Check if WordPress is already installed
 if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 
 	echo "wp-config.php not found, installing WordPress..."
 
-	# Download WordPress core files
 	wp core download --path=/var/www/html/wordpress --allow-root
 
 	wp config create \
@@ -64,3 +61,7 @@ wp user create $WP_USER $WP_USER_EMAIL \
 	--role=editor \
 	--path=/var/www/html/wordpress \
 	--allow-root
+
+mkdir -p /var/www/html/wordpress/wp-content/uploads
+chown -R www-data:www-data /var/www/html/wordpress/wp-content/uploads
+chmod -R 755 /var/www/html/wordpress/wp-content/uploads

@@ -1,13 +1,8 @@
-# base image
 FROM debian:bullseye
 
-# Install NGINX
 RUN apt-get update && apt-get install -y nginx \
-	curl \
-	netcat-openbsd \
-	iputils-ping
+	curl netcat-openbsd iputils-ping
 
-# copy custom NGINX config file from our host machine into container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # TSL SETUP
@@ -19,8 +14,6 @@ RUN mkdir -p /var/www/html/static
 COPY conf/html/index.html /var/www/html/static/index.html
 COPY conf/html/barbie.png /var/www/html/static/barbie.png
 
-# expose HTTP and HTTPS ports to allow external connections
 EXPOSE 443
 
-# start nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
