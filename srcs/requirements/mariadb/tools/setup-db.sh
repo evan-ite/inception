@@ -2,6 +2,8 @@
 
 echo "Start WordPress database setup."
 
+
+
 # Connect to MariaDB and grant privileges
 mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "
 CREATE DATABASE IF NOT EXISTS ${DB_NAME};
