@@ -60,7 +60,6 @@ services:
       - inception_network
     restart: unless-stopped
 
-
 secrets:
   db_pw:
     file: ./secrets/db_pw.txt
