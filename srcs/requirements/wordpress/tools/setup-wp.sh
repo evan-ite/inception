@@ -4,7 +4,7 @@ DB_PW=$(cat /run/secrets/db_pw)
 WP_ADMIN_PW=$(cat /run/secrets/wp_admin_pw)
 WP_USER_PW=$(cat /run/secrets/wp_user_pw)
 
-# Function to check if MariaDB is ready
+
 function wait_for_mariadb() {
 	until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PW" -e "SELECT 1" &> /dev/null; do
 		echo "Waiting for MariaDB to be ready..."
@@ -47,10 +47,8 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 else
 	echo "wp-config.php exists, updating WordPress."
 
-	# Update site title
 	wp option update blogname "$WP_TITLE" --path=/var/www/html/wordpress --allow-root
 
-	# Update admin user info
 	wp user update $WP_ADMIN \
 		--user_pass=$WP_ADMIN_PW \
 		--user_email=$WP_ADMIN_EMAIL \
@@ -59,7 +57,7 @@ else
 
 fi
 
-# Create additional user
+
 wp user create $WP_USER $WP_USER_EMAIL \
 	--user_pass=$WP_USER_PW \
 	--role=editor \
