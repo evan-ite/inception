@@ -62,13 +62,13 @@ services:
 
 secrets:
   db_pw:
-    file: ./secrets/db_pw.txt
+    file: ../secrets/db_pw.txt
   db_root_pw:
-    file: ./secrets/db_root_pw.txt
+    file: ../secrets/db_root_pw.txt
   wp_admin_pw:
-    file: ./secrets/wp_admin_pw.txt
+    file: ../secrets/wp_admin_pw.txt
   wp_user_pw:
-    file: ./secrets/wp_user_pw.txt
+    file: ../secrets/wp_user_pw.txt
 
 volumes:
   mariadb:

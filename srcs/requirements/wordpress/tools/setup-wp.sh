@@ -1,14 +1,18 @@
 #!/bin/bash
 
+DB_PW=$(cat /run/secrets/db_pw)
+WP_ADMIN_PW=$(cat /run/secrets/wp_admin_pw)
+WP_USER_PW=$(cat /run/secrets/wp_user_pw)
+
 # Function to check if MariaDB is ready
 function wait_for_mariadb() {
-	until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASSWORD" -e "SELECT 1" &> /dev/null; do
+	until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PW" -e "SELECT 1" &> /dev/null; do
 		echo "Waiting for MariaDB to be ready..."
 		sleep 3
 	done
 	echo "MariaDB is ready."
 
-	until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PASSWORD" -e "USE $DB_NAME; SELECT 1" &> /dev/null; do
+	until mysql -h"$DB_HOST" -u"$DB_USER" -p"$DB_PW" -e "USE $DB_NAME; SELECT 1" &> /dev/null; do
 		echo "Waiting for database $DB_NAME to be created..."
 		sleep 3
 	done
@@ -26,7 +30,7 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 	wp config create \
 		--dbname=$DB_NAME \
 		--dbuser=$DB_USER \
-		--dbpass=$DB_PASSWORD \
+		--dbpass=$DB_PW \
 		--dbhost=$DB_HOST \
 		--path=/var/www/html/wordpress \
 		--allow-root
@@ -36,7 +40,7 @@ if [ ! -f /var/www/html/wordpress/wp-config.php ]; then
 		--title=$WP_TITLE \
 		--admin_user=$WP_ADMIN \
 		--admin_email=$WP_ADMIN_EMAIL \
-		--admin_password=$WP_ADMIN_PASSWORD \
+		--admin_password=$WP_ADMIN_PW \
 		--path=/var/www/html/wordpress \
 		--allow-root
 
@@ -48,7 +52,7 @@ else
 
 	# Update admin user info
 	wp user update $WP_ADMIN \
-		--user_pass=$WP_ADMIN_PASSWORD \
+		--user_pass=$WP_ADMIN_PW \
 		--user_email=$WP_ADMIN_EMAIL \
 		--path=/var/www/html/wordpress \
 		--allow-root
@@ -57,7 +61,7 @@ fi
 
 # Create additional user
 wp user create $WP_USER $WP_USER_EMAIL \
-	--user_pass=$WP_USER_PASSWORD \
+	--user_pass=$WP_USER_PW \
 	--role=editor \
 	--path=/var/www/html/wordpress \
 	--allow-root
